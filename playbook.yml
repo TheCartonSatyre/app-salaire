@@ -6,11 +6,11 @@
     - user
   
  - name: Installation du serveur apache
-   hosts: app-salaire.adrien.form
+   hosts: all
    roles:
     - apache
     
  - name: Installation de mariadb
-   hosts: app-salaire.adrien.form 
+   hosts: all 
    roles:
     - mariadb
