@@ -1,10 +1,3 @@
- - name: Création user
-   hosts: all
-   become: yes
-   remote_user: Utilisateur
-   roles:
-    - user
-  
  - name: Installation du serveur apache
    hosts: all
    roles:
