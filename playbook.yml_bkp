@@ -1,9 +1,0 @@
- - name: Installation du serveur apache
-   hosts: all
-   roles:
-    - apache
-    
- - name: Installation de mariadb
-   hosts: all 
-   roles:
-    - mariadb
