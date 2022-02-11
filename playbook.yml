@@ -1,0 +1,16 @@
+ - name: Création user
+   hosts: all
+   become: yes
+   remote_user: Utilisateur
+   roles:
+    - user
+  
+- name: Installation du serveur apache
+   hosts: [web] 
+   roles:
+    - apache
+    
+- name: Installation de mariadb
+  hosts: [web]
+  roles:
+    - mariadb

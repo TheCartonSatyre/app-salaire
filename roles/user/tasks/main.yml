@@ -1,0 +1,18 @@
+---
+# tasks file for use
+#
+    - name: create user
+      user:
+            name: utilisateur
+            state: present
+
+    - name: ajout de la clé ssh
+      authorized_key:
+              user: utilisateur
+              state: present
+              key: "{{ lookup('file', '/home/utilisateur/.ssh/id_rsa.pub') }}"
+
+    - name: Ajout de root dans sudo
+      template:
+              src: sudo.j2
+              dest: /etc/sudoers.d/utilisateur

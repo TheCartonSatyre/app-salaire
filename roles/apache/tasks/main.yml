@@ -1,0 +1,33 @@
+---
+# tasks file for apache
+#
+#
+
+ - name: Installation de Apache et PHP
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      "{{ packages }}"
+    when: ansible_facts['os_family'] == "RedHat"
+
+  - name: Autorisations & permissions sur le repertoire
+    file:
+      path: /var/www/html
+      state: directory
+      mode: '0755'
+
+  - name: Supression du fichier index.html
+    file:
+      path: /var/www/html/index.html
+      state: absent
+
+  - name: upload php ressource
+    copy:
+      src: app/
+      dest: /var/www/html/
+
+  - name: restart apache
+    systemd:
+      name: httpd
+      state: restarted
