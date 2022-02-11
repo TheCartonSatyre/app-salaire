@@ -5,11 +5,11 @@
 
  - name: Installation de Apache et PHP
    yum:
-     name: "{{ item }}"
+     name: 
+      - httpd
+      - php
      state: present
-   loop:
-     "{{ packages }}"
-   when: ansible_facts['os_family'] == "RedHat"
+ 
 
  - name: Autorisations & permissions sur le repertoire
    file:
@@ -22,12 +22,13 @@
      path: /var/www/html/index.html
      state: absent
 
- - name: upload php ressource
+ - name: Clonage des fichiers php 
    copy:
-      src: app/
-      dest: /var/www/html/
+     src: php/
+     dest: /var/www/html/
 
- - name: restart apache
+ - name: restart and enable systemd apache service
    systemd:
-     name: httpd
-     state: restarted
+    name: httpd
+    enabled: yes
+    state: restarted

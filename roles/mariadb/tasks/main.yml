@@ -3,34 +3,19 @@
 #
 - name: installation mysql
   yum:
-   name: mariadb
+   name: 
+    - mariadb
+    - mariadb-server
    state: present
-  when: ansible_facts['os_family'] == "RedHat"
 
 - name: Activation et démarrage du serveur mariadb
   systemd:
    name: mariadb
    enabled: yes
-   state: started
-   
-     
-- name: give writable mode to http folder
-  file:
-   path: /etc/mysql/mysql.conf.d/
-   state: directory
-   mode: '0755'
- 
-- name: Allow external MySQL connexions (1/2)
-  lineinfile:
-   path: /etc/mysql/mysql.conf.d/mysqld.cnf
-   regexp: '^skip-external-locking'
-   line: "# skip-external-locking"
-      
-- name: Allow external MySQL connexions (2/2)
-  lineinfile:
-   path: /etc/mysql/mysql.conf.d/mysqld.cnf
-   regexp: '^bind-address'
-   line: "# bind-address"
+   state: restarted
+
+- name: Start mysql_secure_installation
+  command: 'echo "& y y Mypasswd Mypasswd y y y y" | ./usr/bin/mysql_secure_installation'
 
 - name: Redémarrer le service SQL
   systemd:
