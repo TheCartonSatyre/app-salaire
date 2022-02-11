@@ -5,12 +5,12 @@
    roles:
     - user
   
-- name: Installation du serveur apache
+ - name: Installation du serveur apache
    hosts: [web] 
    roles:
     - apache
     
-- name: Installation de mariadb
-  hosts: [web]
-  roles:
+ - name: Installation de mariadb
+   hosts: [web]
+   roles:
     - mariadb

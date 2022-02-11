@@ -2,36 +2,38 @@
 # tasks file for mariadb
 #
 - name: installation mysql
-    yum:
-      name: mariadb
-      state: present
-    when: ansible_facts['os_family'] == "RedHat"
+  yum:
+   name: mariadb
+   state: present
+  when: ansible_facts['os_family'] == "RedHat"
 
-  - name: Activation et démarrage du serveur mariadb
-    systemd:
-      name: mariadb
-      state: started
-      enabled: yes
+- name: Activation et démarrage du serveur mariadb
+  systemd:
+   name: mariadb
+   enabled: yes
+   state: started
+   
      
-  - name: give writable mode to http folder
-    file:
-      path: /etc/mysql/mysql.conf.d/
-      state: directory
-      mode: '0755'
+- name: give writable mode to http folder
+  file:
+   path: /etc/mysql/mysql.conf.d/
+   state: directory
+   mode: '0755'
  
-  - name: Allow external MySQL connexions (1/2)
-    lineinfile:
-      path: /etc/mysql/mysql.conf.d/mysqld.cnf
-      regexp: '^skip-external-locking'
-      line: "# skip-external-locking"
+- name: Allow external MySQL connexions (1/2)
+  lineinfile:
+   path: /etc/mysql/mysql.conf.d/mysqld.cnf
+   regexp: '^skip-external-locking'
+   line: "# skip-external-locking"
       
-  - name: Allow external MySQL connexions (2/2)
-    lineinfile:
-      path: /etc/mysql/mysql.conf.d/mysqld.cnf
-      regexp: '^bind-address'
-      line: "# bind-address"
+- name: Allow external MySQL connexions (2/2)
+  lineinfile:
+   path: /etc/mysql/mysql.conf.d/mysqld.cnf
+   regexp: '^bind-address'
+   line: "# bind-address"
 
-  - name: Redémarrer le service SQL
-    systemd:
-      name: mariadb
-      state: restarted
+- name: Redémarrer le service SQL
+  systemd:
+   name: mariadb
+   enabled: yes 
+   state: restarted
