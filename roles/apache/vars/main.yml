@@ -1,7 +1,3 @@
 ---
 # vars file for apache
 #
-packages:
-  - php
-  - php-mysql
-  - httpd
